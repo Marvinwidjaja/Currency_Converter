@@ -40,14 +40,23 @@ def index():
         amount = ""
         amount_final = ""
     else :
-
         amount = "".join(request.form.getlist('Amount'))
-        fromcurr = "".join(request.form.getlist('From'))
-        tocurr = "".join(request.form.getlist('To'))
-        new_address = "https://www.x-rates.com/calculator/?from="+fromcurr+"&to="+tocurr+"&amount="+amount
-        new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
-        amount_final = str(new_soup.find("span",{"class":"ccOutputRslt"}).contents[0])
-        
+        if len(amount)==0:
+            amount_final="Invalid input"
+        if amount.isdigit() == False:
+            amount_final="Invalid input"
+        else:
+            for s in [int(s) for s in amount.split() if amount.isdigit()]:
+                if(s==0):
+                    amount_final="Cannot input 0"
+                else:
+                    fromcurr = "".join(request.form.getlist('From'))
+                    tocurr = "".join(request.form.getlist('To'))
+                    new_address = "https://www.x-rates.com/calculator/?from="+fromcurr+"&to="+tocurr+"&amount="+amount
+                    new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
+                    amount_final = str(new_soup.find("span",{"class":"ccOutputRslt"}).contents[0])
+
+            
     
     return render_template("index.html", answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
 
