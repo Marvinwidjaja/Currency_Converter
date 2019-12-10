@@ -32,8 +32,12 @@ idr_table = tables7[1]
 url8 = 'https://www.x-rates.com/table/?from=CNY&amount=1'
 tables8 = pd.read_html(url8)
 cny_table = tables8[1]
-@App.route('/currency_converter', methods = ['POST','GET'])
-def currency_converter():
+@App.route('/')
+def index():
+    return render_template('index.html')
+    
+@App.route('/currencyconverter', methods = ['POST','GET'])
+def currencyconverter():
     f_form = t_form = []
     address = "https://www.x-rates.com/calculator/"
     soup = BeautifulSoup(urllib.request.urlopen(address).read(), "html.parser")
@@ -85,7 +89,7 @@ def currency_converter():
 
             
     
-    return render_template("currency_converter.html", answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
+    return render_template('currencyconverter.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
 
 @App.route('/usd')
 def usd():
@@ -130,9 +134,7 @@ def cny():
     
     
     
-@App.route('/')
-def index():
-    return render_template('index.html')
+
 
 if __name__ == '__main__':
     App.debug=True
