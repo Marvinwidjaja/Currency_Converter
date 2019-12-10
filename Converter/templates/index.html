@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Currency Converter</title>
-	</head>
-	<body>
-		
-		<form method="POST" action = "http://localhost:5000/">
-				Amount: <input type ="text" name ="Amount" value={{amount}}>
-				<select name = "From">
-					<option selected="selected" value={{from_select}}>{{from_select}}</option>
-					{% for key in from_form %} 
-					<option value="{{key[0:3]}}">{{key}}</option>
-					
-					{% endfor %}
-				</select>
-				->
-				<select name = "To">
-						<option selected="selected" value={{to_select}}>{{to_select}}</option>
-						{% for key in to_form %}
-						<option value="{{key[0:3]}}">{{key}}</option>
-						{% endfor %}
-				</select>
-				<input type="submit" name="submit" value="submit">
-			</form>
-
-        Answer:<output type ="text" name ="result">{{answer}}</output>
-		
-	</body>
-
+    <head>
+        <title> Lol </title>
+        <a href={{ url_for('currency_converter') }}>Convert Currencies</a>
+        <p>Show currency rates for</p>
+        <a href={{ url_for('usd') }}>US Dollar</a>
+        <br>
+        <a href={{ url_for('euro') }}>Euro</a>
+        <br>
+        <a href={{ url_for('pound') }}>British Pound</a>
+        <br>
+        <a href={{ url_for('sgd') }}>Singapore Dollar</a>
+        <br>
+        <a href={{ url_for('chf') }}>Swiss Franc</a>
+        <br>
+        <a href={{ url_for('rub') }}>Russian Ruble</a>
+        <br>
+        <a href={{ url_for('aud') }}>Australian Dollar</a>
+        <br>
+        <a href={{ url_for('idr') }}>Indonesian Rupiah</a>
+        <br>
+        <a href={{ url_for('cny') }}>Chinese Yuan Renminbi</a>
+        <br>
+        
+    </head>
 
 </html>
-
-
