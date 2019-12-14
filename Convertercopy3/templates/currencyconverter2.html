@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Currency Converter</title>
+	</head>
+	<body>
+			
+		<form method="POST" action = "http://localhost:5000/currencyconverter2">
+				Amount: <input type ="text" name ="Amount" value={{amount}}>
+				<select name = "From">
+					<option selected="selected" value={{from_select}}>{{from_form[a]}}</option>
+					{% for key in from_form[0:23] %} 
+					<option value="{{key[0:3]}}">{{key}}</option>
+					
+					{% endfor %}
+				</select>
+				->
+				<select name = "To">
+						<option selected="selected" value={{to_select}}>{{to_form[a]}}</option>
+						{% for key in to_form[0:23] %}
+						<option value="{{key[0:3]}}">{{key}}</option>
+						{% endfor %}
+				</select>
+				
+				<input type="submit" name="submit" value="submit">
+                    <a href={{ url_for('dashboard') }}>Home</a>
+					<a href={{ url_for('list2') }}>View History</a>
+					<a href="/logout">Logout</a>
+					
+					
+                    
+                            
+			</form>
+        
+
+
+        Answer:<output type ="text" name ="result">{{answer}}</output>
+		
+        
+	</body>
+
+</html>
+
+

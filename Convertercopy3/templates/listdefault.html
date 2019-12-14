@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+   <body>
+      <table border = 1>
+         <thead>
+            <td>Your Default Currency</td>
+         </thead>
+         
+         {% for row in rows %}
+            <tr>
+               <td>{{row["selected_default_curr"]}}</td>
+            </tr>
+         {% endfor %}
+      </table>
+      
+      <a href = "dashboard">Go back</a>
+   </body>
+</html>

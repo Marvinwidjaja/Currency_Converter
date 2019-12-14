@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Homepage <small> Welcome {{session.username}}</small></h1>
+  <a href='currencyconverter2'> Currency Converter</a>
+  <a href='setdefault'> Set Default Currency</a>
+  <p>Show currency rates for</p>
+  <a href={{ url_for('usd2') }}>US Dollar</a>
+  <br>
+  <a href={{ url_for('euro2') }}>Euro</a>
+  <br>
+  <a href={{ url_for('pound2') }}>British Pound</a>
+  <br>
+  <a href={{ url_for('sgd2') }}>Singapore Dollar</a>
+  <br>
+  <a href={{ url_for('chf2') }}>Swiss Franc</a>
+  <br>
+  <a href={{ url_for('rub2') }}>Russian Ruble</a>
+  <br>
+  <a href={{ url_for('aud2') }}>Australian Dollar</a>
+  <br>
+  <a href={{ url_for('idr2') }}>Indonesian Rupiah</a>
+  <br>
+  <a href={{ url_for('cny2') }}>Chinese Yuan Renminbi</a>
+  <br>
+  <hr>
+{% endblock %}

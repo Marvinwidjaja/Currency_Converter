@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Currency Converter</title>
+	</head>
+	<body>
+            {% include 'includes/_messages.html' %}
+            {% block body %}{% endblock %}
+		<form method="POST" action = "http://localhost:5000/setdefault">
+				<select name = "Default">
+					<option selected="selected" value={{default_select}}>{{default_select}}</option>
+					{% for key in default_form %} 
+					<option value="{{key[0:3]}}">{{key}}</option>
+					
+					{% endfor %}
+				</select>
+				->
+				<input type="submit" name="submit" value="submit">
+                    <a href = "listdefault">Next</a>
+
+                            
+			</form>
+        
+		
+        
+	</body>
+    
+
+</html>
+
+
