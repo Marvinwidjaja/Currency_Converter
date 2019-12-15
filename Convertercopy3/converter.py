@@ -459,6 +459,68 @@ def currencyconverter2():
                 
     return render_template('currencyconverter2.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form, a=a )
     con.close()
+@App.route('/cryptocurrencyconverter', methods = ['POST','GET'])
+def cryptocurrencyconverter():
+    f_form = t_form = []
+    fromcurr = "Enter From Currency"
+    tocurr = "Enter To Currency"
+    f_form=['Bitcoin', 'Ethereum','Ripple', 'Litecoin', 'Bitcoin-Cash','USD','EUR','GBP','RUB','SGD','HKD']
+
+
+    t_form=['Bitcoin', 'Ethereum','Ripple', 'Litecoin', 'Bitcoin-Cash','USD','EUR','GBP','RUB','SGD','HKD']
+
+    if request.method == 'GET':
+        amount = ""
+        amount_final = ""
+    else :
+        amount = "".join(request.form.getlist('Amount'))
+        if len(amount)==0:
+            amount_final="Invalid input"
+        if amount.isdigit() == False:
+            amount_final="Invalid input"
+        else:
+            for s in [int(s) for s in amount.split() if amount.isdigit()]:
+                if(s==0):
+                    amount_final="Cannot input 0"
+                else:
+                    fromcurr = "".join(request.form.getlist('From'))
+                    tocurr = "".join(request.form.getlist('To'))
+                    new_address = "https://walletinvestor.com/converter/"+fromcurr+"/"+tocurr+"/"+amount
+                    new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
+                    amount_final = str(new_soup.find("span",{"class":"converter-title-amount"}).contents[0])
+    return render_template('cryptocurrencyconverter.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
+
+@App.route('/cryptocurrencyconverter2', methods = ['POST','GET'])
+def cryptocurrencyconverter2():
+    f_form = t_form = []
+    fromcurr = "Enter From Currency"
+    tocurr = "Enter To Currency"
+    f_form=['Bitcoin', 'Ethereum','Ripple', 'Litecoin', 'Bitcoin-Cash','USD','EUR','GBP','RUB','SGD','HKD']
+
+
+    t_form=['Bitcoin', 'Ethereum','Ripple', 'Litecoin', 'Bitcoin-Cash','USD','EUR','GBP','RUB','SGD','HKD']
+
+    if request.method == 'GET':
+        amount = ""
+        amount_final = ""
+    else :
+        amount = "".join(request.form.getlist('Amount'))
+        if len(amount)==0:
+            amount_final="Invalid input"
+        if amount.isdigit() == False:
+            amount_final="Invalid input"
+        else:
+            for s in [int(s) for s in amount.split() if amount.isdigit()]:
+                if(s==0):
+                    amount_final="Cannot input 0"
+                else:
+                    fromcurr = "".join(request.form.getlist('From'))
+                    tocurr = "".join(request.form.getlist('To'))
+                    new_address = "https://walletinvestor.com/converter/"+fromcurr+"/"+tocurr+"/"+amount
+                    new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
+                    amount_final = str(new_soup.find("span",{"class":"converter-title-amount"}).contents[0])
+    return render_template('cryptocurrencyconverter2.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
+
 
 @App.route('/list2')
 def list2():
