@@ -10,7 +10,7 @@ from functools import wraps
 import html5lib
 import os.path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(BASE_DIR, "Registrationfinal.db")
+db_path = os.path.join(BASE_DIR, "registrationfinal.db")
 
 App = Flask(__name__)
 url = 'https://www.x-rates.com/table/?from=USD&amount=1'
