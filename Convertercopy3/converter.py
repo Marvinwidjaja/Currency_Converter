@@ -36,7 +36,7 @@ idr_table = tables7[1]
 url8 = 'https://www.x-rates.com/table/?from=CNY&amount=1'
 tables8 = pd.read_html(url8)
 cny_table = tables8[1]
-with sql.connect("/Users/lol/Downloads/Convertercopy3/database.db") as con:
+with sql.connect("database.db") as con:
     cur = con.cursor()
     cur.execute("DROP TABLE IF EXISTS students")
     cur.execute("CREATE TABLE students(amount INT, from_curr TEXT, to_curr TEXT, amount_final INT)")
@@ -97,7 +97,7 @@ def currencyconverter():
                     new_address = "https://www.x-rates.com/calculator/?from="+fromcurr+"&to="+tocurr+"&amount="+amount
                     new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
                     amount_final = str(new_soup.find("span",{"class":"ccOutputRslt"}).contents[0])
-                    with sql.connect("/Users/lol/Downloads/Convertercopy3/database.db") as con:
+                    with sql.connect("database.db") as con:
                         cur = con.cursor()
                         cur.execute("INSERT INTO students (amount,from_curr,to_curr,amount_final) VALUES (?,?,?,?)",(amount,fromcurr,tocurr,amount_final))
                         con.commit()
@@ -125,7 +125,7 @@ def setdefault():
         pass
     if request.method == 'POST':
         defaultcurr= "".join(request.form.getlist('Default'))
-    with sql.connect("/Users/lol/Downloads/Convertercopy3/defaulttable.db") as con:
+    with sql.connect("defaulttable.db") as con:
         cur = con.cursor()
         cur.execute("DROP TABLE IF EXISTS setdefault")
         con.execute("CREATE TABLE setdefault(selected_default_curr varchar(50))")
@@ -136,7 +136,7 @@ def setdefault():
     
 @App.route('/listdefault')
 def listdefault():
-   con = sql.connect("/Users/lol/Downloads/Convertercopy3/defaulttable.db")
+   con = sql.connect("defaulttable.db")
    con.row_factory = sql.Row
    
    cur = con.cursor()
@@ -223,7 +223,7 @@ def cny2():
     
 @App.route('/list')
 def list():
-   con = sql.connect("/Users/lol/Downloads/Convertercopy3/database.db")
+   con = sql.connect("database.db")
    con.row_factory = sql.Row
    
    cur = con.cursor()
@@ -251,7 +251,7 @@ def register():
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data))
 
-        with sql.connect("/Users/lol/Downloads/Convertercopy3/registration1.db") as con:
+        with sql.connect("registration1.db") as con:
             cur = con.cursor()
         x = cur.execute("SELECT username FROM register WHERE username=:username", {"username":username}).fetchone()
         if x is not None:
@@ -280,7 +280,7 @@ def login():
         username = request.form['username']
         password_candidate = request.form['password']
 
-        with sql.connect("/Users/lol/Downloads/Convertercopy3/registration1.db") as con:
+        with sql.connect("registration1.db") as con:
             cur = con.cursor()
 
         result = cur.execute("SELECT * FROM register WHERE username = ?", [username])
@@ -329,7 +329,7 @@ def dashboard():
         
 @App.route('/currencyconverter2', methods = ['POST','GET'])
 def currencyconverter2():
-    with sql.connect("/Users/lol/Downloads/Convertercopy3/defaulttable.db") as con:
+    with sql.connect("defaulttable.db") as con:
         cur = con.cursor()
         cur.execute("SELECT * FROM setdefault")
         rows=cur.fetchall()
@@ -449,7 +449,7 @@ def currencyconverter2():
                     new_address = "https://www.x-rates.com/calculator/?from="+fromcurr+"&to="+tocurr+"&amount="+amount
                     new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
                     amount_final = str(new_soup.find("span",{"class":"ccOutputRslt"}).contents[0])
-                    with sql.connect("/Users/lol/Downloads/Convertercopy3/database.db") as con:
+                    with sql.connect("database.db") as con:
                         cur = con.cursor()
                         cur.execute("INSERT INTO students (amount,from_curr,to_curr,amount_final) VALUES (?,?,?,?)",(amount,fromcurr,tocurr,amount_final))
                         con.commit()
@@ -524,7 +524,7 @@ def cryptocurrencyconverter2():
 
 @App.route('/list2')
 def list2():
-   con = sql.connect("/Users/lol/Downloads/Convertercopy3/database.db")
+   con = sql.connect("database.db")
    con.row_factory = sql.Row
    
    cur = con.cursor()
