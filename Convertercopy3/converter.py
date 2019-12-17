@@ -266,7 +266,7 @@ def register():
             con.commit()
 
                 # Close connection
-            cun.close()
+            con.close()
 
             flash('You are now registered and can log in', 'success')
 
