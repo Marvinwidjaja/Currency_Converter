@@ -11,7 +11,16 @@
                <td>{{row["selected_default_curr"]}}</td>
             </tr>
          {% endfor %}
+         <thead>
+            <td>Your Default CryptoCurrency</td>
+         </thead>
+         {% for row in rowss %}
+         <tr>
+            <td>{{row["selected_default_crypt"]}}</td>
+         </tr>
+      {% endfor %}
       </table>
+
       
       <a href = "dashboard">Go back</a>
    </body>

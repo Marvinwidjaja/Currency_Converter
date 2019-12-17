@@ -7,16 +7,16 @@
 	<body>
             {% include 'includes/_messages.html' %}
             {% block body %}{% endblock %}
-		<form method="POST" action = "http://localhost:5000/setdefault">
-				<select name = "Default">
-					<option selected="selected" value={{default_select}}>{{default_select}}</option>
-					{% for key in default_form %} 
-					<option value="{{key[0:3]}}">{{key}}</option>
+		<form method="POST" action = "http://localhost:5000/setdefaultcrypt">
+				<select name = "Crypt">
+					<option selected="selected" value={{crypt_select}}>{{crypt_select}}</option>
+					{% for key in crypt_form %} 
+					<option value="{{key}}">{{key}}</option>
 					
 					{% endfor %}
 				</select>
 				<input type="submit" name="submit" value="submit">
-                    <a href = "setdefaultcrypt">Next</a>
+                    <a href = "listdefault">Next</a>
 
                             
 			</form>

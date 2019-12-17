@@ -8,6 +8,10 @@ from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from functools import wraps
 import html5lib
+import os.path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "Registrationfinal.db")
+
 App = Flask(__name__)
 url = 'https://www.x-rates.com/table/?from=USD&amount=1'
 tables = pd.read_html(url)
@@ -112,6 +116,7 @@ def setdefault():
     address = "https://www.x-rates.com/calculator/"
     soup = BeautifulSoup(urllib.request.urlopen(address).read(), "html.parser")
     defaultcurr= "Select your Default Currency"
+
     default_form=soup.find("select",attrs={"name":"from"})
     if default_form is not None:
         default_form=default_form.contents
@@ -133,7 +138,21 @@ def setdefault():
         con.commit()
     return render_template('setdefault.html',default_form=def_form,default_select=defaultcurr)
     con.close()
-    
+
+@App.route('/setdefaultcrypt', methods = ['POST','GET'])
+def setdefaultcrypt():
+    crypt_form=["Bitcoin","Ethereum","Ripple","Litecoin","Bitcoin-Cash"]
+    defaultcrypt= "Select your Default CryptoCurrency"
+    if request.method == 'POST':
+        defaultcrypt= "".join(request.form.getlist('Crypt'))
+    with sql.connect("defaulttablefinal.db") as con:
+       cur = con.cursor()
+       cur.execute("DROP TABLE IF EXISTS setdefault")
+       con.execute("CREATE TABLE setdefault(selected_default_crypt varchar (50))")
+       cur.execute("INSERT INTO setdefault (selected_default_crypt) VALUES(?)",[defaultcrypt])
+       con.commit()
+    return render_template('setdefaultcrypt.html',crypt_form=crypt_form,crypt_select=defaultcrypt)
+    con.close()
 @App.route('/listdefault')
 def listdefault():
    con = sql.connect("defaulttable.db")
@@ -143,7 +162,14 @@ def listdefault():
    cur.execute("SELECT * FROM setdefault")
    
    rows = cur.fetchall();
-   return render_template("listdefault.html",rows = rows)
+   con = sql.connect("defaulttablefinal.db")
+   con.row_factory = sql.Row
+   
+   cur = con.cursor()
+   cur.execute("SELECT * FROM setdefault")
+   
+   rowss = cur.fetchall();
+   return render_template("listdefault.html",rows = rows,rowss=rowss)
 
 @App.route('/usd')
 def usd():
@@ -251,7 +277,7 @@ def register():
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data))
 
-        with sql.connect("registration1.db") as con:
+        with sql.connect(db_path) as con:
             cur = con.cursor()
         x = cur.execute("SELECT username FROM register WHERE username=:username", {"username":username}).fetchone()
         if x is not None:
@@ -280,7 +306,7 @@ def login():
         username = request.form['username']
         password_candidate = request.form['password']
 
-        with sql.connect("registration1.db") as con:
+        with sql.connect(db_path) as con:
             cur = con.cursor()
 
         result = cur.execute("SELECT * FROM register WHERE username = ?", [username])
@@ -492,9 +518,31 @@ def cryptocurrencyconverter():
 
 @App.route('/cryptocurrencyconverter2', methods = ['POST','GET'])
 def cryptocurrencyconverter2():
+    with sql.connect("defaulttablefinal.db") as con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM setdefault")
+        rows=cur.fetchall()
+        for row in rows:
+            a= row[0]
+    btc="Bitcoin"
+    eth="Ethereum"
+    rip="Ripple"
+    ltc="Litecoin"
+    btcc="Bitcoin-Cash"
+    if a==btc:
+        a=0
+    if a==eth:
+        a=1
+    if a==rip:
+        a=2
+    if a==ltc:
+        a=3
+    if a==btcc:
+        a=4
+    
     f_form = t_form = []
+    
     fromcurr = "Enter From Currency"
-    tocurr = "Enter To Currency"
     f_form=['Bitcoin', 'Ethereum','Ripple', 'Litecoin', 'Bitcoin-Cash','USD','EUR','GBP','RUB','SGD','HKD']
 
 
@@ -519,7 +567,7 @@ def cryptocurrencyconverter2():
                     new_address = "https://walletinvestor.com/converter/"+fromcurr+"/"+tocurr+"/"+amount
                     new_soup = BeautifulSoup(urllib.request.urlopen(new_address).read(), "html.parser")
                     amount_final = str(new_soup.find("span",{"class":"converter-title-amount"}).contents[0])
-    return render_template('cryptocurrencyconverter2.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, to_select=tocurr)
+    return render_template('cryptocurrencyconverter2.html', answer=amount_final, amount=amount, from_form=f_form, to_form=t_form , from_select=fromcurr, a=a)
 
 
 @App.route('/list2')
