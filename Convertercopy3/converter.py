@@ -13,33 +13,16 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "registrationfinal.db")
 
 App = Flask(__name__)
-url = 'https://www.x-rates.com/table/?from=USD&amount=1'
-tables = pd.read_html(url)
-usd_table = tables[1]
-url1 = 'https://www.x-rates.com/table/?from=EUR&amount=1'
-tables1 = pd.read_html(url1)
-euro_table = tables1[1]
-url2 = 'https://www.x-rates.com/table/?from=GBP&amount=1'
-tables2 = pd.read_html(url2)
-gbp_table = tables2[1]
-url3 = 'https://www.x-rates.com/table/?from=SGD&amount=1'
-tables3 = pd.read_html(url3)
-sgd_table = tables3[1]
-url4 = 'https://www.x-rates.com/table/?from=CHF&amount=1'
-tables4 = pd.read_html(url4)
-swiss_table = tables4[1]
-url5 = 'https://www.x-rates.com/table/?from=RUB&amount=1'
-tables5 = pd.read_html(url5)
-rub_table = tables5[1]
-url6 = 'https://www.x-rates.com/table/?from=AUD&amount=1'
-tables6 = pd.read_html(url6)
-aud_table = tables6[1]
-url7 = 'https://www.x-rates.com/table/?from=IDR&amount=1'
-tables7 = pd.read_html(url7)
-idr_table = tables7[1]
-url8 = 'https://www.x-rates.com/table/?from=CNY&amount=1'
-tables8 = pd.read_html(url8)
-cny_table = tables8[1]
+url=['https://www.x-rates.com/table/?from=USD&amount=1','https://www.x-rates.com/table/?from=EUR&amount=1','https://www.x-rates.com/table/?from=GBP&amount=1','https://www.x-rates.com/table/?from=SGD&amount=1','https://www.x-rates.com/table/?from=CHF&amount=1','https://www.x-rates.com/table/?from=RUB&amount=1','https://www.x-rates.com/table/?from=AUD&amount=1','https://www.x-rates.com/table/?from=IDR&amount=1','https://www.x-rates.com/table/?from=CNY&amount=1']
+tables = pd.read_html(url[0])
+tables1 = pd.read_html(url[1])
+tables2 = pd.read_html(url[2])
+tables3 = pd.read_html(url[3])
+tables4 = pd.read_html(url[4])
+tables5 = pd.read_html(url[5])
+tables6 = pd.read_html(url[6])
+tables7 = pd.read_html(url[7])
+tables8 = pd.read_html(url[8])
 with sql.connect("database.db") as con:
     cur = con.cursor()
     cur.execute("DROP TABLE IF EXISTS students")
@@ -174,77 +157,77 @@ def listdefault():
 @App.route('/usd')
 def usd():
 
-    return render_template('usd.html',  tables=[usd_table.to_html(classes='data')], titles=usd_table.columns.values)
+    return render_template('usd.html',  tables=[tables[1].to_html(classes='data')])
     
 @App.route('/euro')
 def euro():
 
-    return render_template('euro.html',  tables1=[euro_table.to_html(classes='data')], titles=euro_table.columns.values)
+    return render_template('euro.html',  tables1=[tables1[1].to_html(classes='data')])
 @App.route('/pound')
 def pound():
 
-    return render_template('pound.html',  tables2=[gbp_table.to_html(classes='data')], titles=gbp_table.columns.values)
+    return render_template('pound.html',  tables2=[tables2[1].to_html(classes='data')])
 @App.route('/sgd')
 def sgd():
 
-    return render_template('sgd.html',  tables3=[sgd_table.to_html(classes='data')], titles=sgd_table.columns.values)
+    return render_template('sgd.html',  tables3=[tables3[1].to_html(classes='data')])
 @App.route('/chf')
 def chf():
 
-    return render_template('chf.html',  tables4=[swiss_table.to_html(classes='data')], titles=swiss_table.columns.values)
+    return render_template('chf.html',  tables4=[tables4[1].to_html(classes='data')])
 @App.route('/rub')
 def rub():
 
-    return render_template('rub.html',  tables5=[rub_table.to_html(classes='data')], titles=rub_table.columns.values)
+    return render_template('rub.html',  tables5=[tables5[1].to_html(classes='data')])
 @App.route('/aud')
 def aud():
 
-    return render_template('aud.html',  tables6=[aud_table.to_html(classes='data')], titles=aud_table.columns.values)
+    return render_template('aud.html',  tables6=[tables6[1].to_html(classes='data')])
 @App.route('/idr')
 def idr():
 
-    return render_template('idr.html',  tables7=[idr_table.to_html(classes='data')], titles=idr_table.columns.values)
+    return render_template('idr.html',  tables7=[tables7[1].to_html(classes='data')])
 @App.route('/cny')
 def cny():
 
-    return render_template('cny.html',  tables8=[cny_table.to_html(classes='data')], titles=cny_table.columns.values)
+    return render_template('cny.html',  tables8=[tables8[1].to_html(classes='data')])
 @App.route('/usd2')
 def usd2():
 
-    return render_template('usd2.html',  tables=[usd_table.to_html(classes='data')], titles=usd_table.columns.values)
+    return render_template('usd2.html',  tables=[tables[1].to_html(classes='data')])
     
 @App.route('/euro2')
 def euro2():
 
-    return render_template('euro2.html',  tables1=[euro_table.to_html(classes='data')], titles=euro_table.columns.values)
+    return render_template('euro2.html',  tables1=[tables1[1].to_html(classes='data')])
 @App.route('/pound2')
 def pound2():
 
-    return render_template('pound2.html',  tables2=[gbp_table.to_html(classes='data')], titles=gbp_table.columns.values)
+    return render_template('pound2.html',  tables2=[tables2[1].to_html(classes='data')])
 @App.route('/sgd2')
 def sgd2():
 
-    return render_template('sgd2.html',  tables3=[sgd_table.to_html(classes='data')], titles=sgd_table.columns.values)
+    return render_template('sgd2.html',  tables3=[tables3[1].to_html(classes='data')])
 @App.route('/chf2')
 def chf2():
 
-    return render_template('chf2.html',  tables4=[swiss_table.to_html(classes='data')], titles=swiss_table.columns.values)
+    return render_template('chf2.html',  tables4=[tables4[1].to_html(classes='data')])
 @App.route('/rub2')
 def rub2():
 
-    return render_template('rub2.html',  tables5=[rub_table.to_html(classes='data')], titles=rub_table.columns.values)
+    return render_template('rub2.html',  tables5=[tables5[1].to_html(classes='data')])
 @App.route('/aud2')
 def aud2():
 
-    return render_template('aud2.html',  tables6=[aud_table.to_html(classes='data')], titles=aud_table.columns.values)
+    return render_template('aud2.html',  tables6=[tables6[1].to_html(classes='data')])
 @App.route('/idr2')
 def idr2():
 
-    return render_template('idr2.html',  tables7=[idr_table.to_html(classes='data')], titles=idr_table.columns.values)
+    return render_template('idr2.html',  tables7=[tables7[1].to_html(classes='data')])
 @App.route('/cny2')
 def cny2():
 
-    return render_template('cny2.html',  tables8=[cny_table.to_html(classes='data')], titles=cny_table.columns.values)
+    return render_template('cny2.html',  tables8=[tables8[1].to_html(classes='data')])
 
     
 @App.route('/list')
