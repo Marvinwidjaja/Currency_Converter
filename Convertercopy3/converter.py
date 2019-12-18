@@ -361,75 +361,78 @@ def currencyconverter2():
         rows=cur.fetchall()
         for row in rows:
             a= row[0]
-    aud="AUD"
-    cad="CAD"
-    chf="CHF"
-    cny="CNY"
-    dkk="dkk"
-    eur="EUR"
-    gbp="GBP"
-    hkd="HKD"
-    huf="HUF"
-    inr="INR"
-    jpy="JPY"
-    mxn="MXN"
-    myr="MYR"
-    nok="NOK"
-    nzd="NZD"
-    php="PHP"
-    rub="RUB"
-    sek="SEK"
-    sgd="SGD"
-    thb="THB"
-    g="TRY"
-    usd="USD"
-    zar="ZAR"
-    if a==aud:
-        a=0
-    if a==cad:
-        a=1
-    if a==chf:
-        a=2
-    if a==cny:
-        a=3
-    if a==dkk:
-        a=4
-    if a==eur:
-        a=5
-    if a==gbp:
-        a=6
-    if a==hkd:
-        a=7
-    if a==huf:
-        a=8
-    if a==inr:
-        a=9
-    if a==jpy:
-        a=10
-    if a==mxn:
-        a=11
-    if a==myr:
-        a=12
-    if a==nok:
-        a=13
-    if a==nzd:
-        a=14
-    if a==php:
-        a=15
-    if a==rub:
-        a=16
-    if a==sek:
-        a=17
-    if a==sgd:
-        a=18
-    if a==thb:
-        a=19
-    if a==g:
-        a=20
-    if a==usd:
-        a=21
-    if a==zar:
-        a=22
+    list_of_currency=["AUD","CAD","CHF","CNY","DKK","EUR","GBP","HKD","HUF","INR","JPY","MXN","MYR","NOK","NZD","PHP","RUB","SEK","SGD","THB","TRY","USD","ZAR"]
+#    aud="AUD"
+#    cad="CAD"
+#    chf="CHF"
+#    cny="CNY"
+#    dkk="DKK"
+#    eur="EUR"
+#    gbp="GBP"
+#    hkd="HKD"
+#    huf="HUF"
+#    inr="INR"
+#    jpy="JPY"
+#    mxn="MXN"
+#    myr="MYR"
+#    nok="NOK"
+#    nzd="NZD"
+#    php="PHP"
+#    rub="RUB"
+#    sek="SEK"
+#    sgd="SGD"
+#    thb="THB"
+#    g="TRY"
+#    usd="USD"
+#    zar="ZAR"
+    if a in list_of_currency:
+        a=list_of_currency.index(a)
+#    if a==aud:
+#        a=0
+#    if a==cad:
+#        a=1
+#    if a==chf:
+#        a=2
+#    if a==cny:
+#        a=3
+#    if a==dkk:
+#        a=4
+#    if a==eur:
+#        a=5
+#    if a==gbp:
+#        a=6
+#    if a==hkd:
+#        a=7
+#    if a==huf:
+#        a=8
+#    if a==inr:
+#        a=9
+#    if a==jpy:
+#        a=10
+#    if a==mxn:
+#        a=11
+#    if a==myr:
+#        a=12
+#    if a==nok:
+#        a=13
+#    if a==nzd:
+#        a=14
+#    if a==php:
+#        a=15
+#    if a==rub:
+#        a=16
+#    if a==sek:
+#        a=17
+#    if a==sgd:
+#        a=18
+#    if a==thb:
+#        a=19
+#    if a==g:
+#        a=20
+#    if a==usd:
+#        a=21
+#    if a==zar:
+#        a=22
     f_form = t_form = []
     address = "https://www.x-rates.com/calculator/"
     soup = BeautifulSoup(urllib.request.urlopen(address).read(), "html.parser")
@@ -524,21 +527,24 @@ def cryptocurrencyconverter2():
         rows=cur.fetchall()
         for row in rows:
             a= row[0]
-    btc="Bitcoin"
-    eth="Ethereum"
-    rip="Ripple"
-    ltc="Litecoin"
-    btcc="Bitcoin-Cash"
-    if a==btc:
-        a=0
-    if a==eth:
-        a=1
-    if a==rip:
-        a=2
-    if a==ltc:
-        a=3
-    if a==btcc:
-        a=4
+    list_of_crypto=["Bitcoin","Ethereum","Ripple","Litecoin","Bitcoin-Cash"]
+    if a in list_of_crypto:
+        a=list_of_crypto.index(a)
+#    btc="Bitcoin"
+#    eth="Ethereum"
+#    rip="Ripple"
+#    ltc="Litecoin"
+#    btcc="Bitcoin-Cash"
+#    if a==btc:
+#        a=0
+#    if a==eth:
+#        a=1
+#    if a==rip:
+#        a=2
+#    if a==ltc:
+#        a=3
+#    if a==btcc:
+#        a=4
     
     f_form = t_form = []
     
